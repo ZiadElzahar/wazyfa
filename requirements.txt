@@ -8,3 +8,4 @@ playwright
 browserforge
 openpyxl
 pydantic
+msgspec
