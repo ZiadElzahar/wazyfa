@@ -7,10 +7,16 @@ import nest_asyncio
 from scrapling import StealthyFetcher
 import os
 # أمر أوتوماتيكي لتثبيت المتصفح الخفي داخل الخادم السحابي
-os.system("playwright install chromium")
-os.system("patchright install chromium")
-# السماح بتداخل حلقات التزامن (Crucial for async scrapers in Streamlit)
-nest_asyncio.apply()
+import os
+import streamlit as st
+
+@st.cache_resource
+def install_browsers():
+    # تثبيت المتصفح الخفي مرة واحدة فقط وحفظه في الذاكرة المخبئية
+    os.system("playwright install chromium")
+    os.system("patchright install chromium")
+
+install_browsers()
 
 def unified_job_scraper(keyword="AI Engineer", location="Egypt"):
     all_jobs = []
