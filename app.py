@@ -5,7 +5,10 @@ import concurrent.futures
 import re
 import nest_asyncio
 from scrapling import StealthyFetcher
-
+import os
+# أمر أوتوماتيكي لتثبيت المتصفح الخفي داخل الخادم السحابي
+os.system("playwright install chromium")
+os.system("patchright install chromium")
 # السماح بتداخل حلقات التزامن (Crucial for async scrapers in Streamlit)
 nest_asyncio.apply()
 
