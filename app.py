@@ -124,17 +124,15 @@ with col2:
 
 if st.button("🚀 ابدأ البحث (Start Scraping)", type="primary"):
     if user_keyword and user_location:
-        with st.spinner(f"جاري سحب البيانات عن {user_keyword} في {user_location}... الرجاء الانتظار (Fetching Data...)"):
-            # استدعاء دالة البحث
-            results = run_in_thread(user_keyword, user_location)
+        # Streamlit سيحافظ على مؤشر التحميل طوال فترة عمل الدالة
+        with st.spinner(f"جاري سحب البيانات عن {user_keyword} في {user_location}... الرجاء الانتظار"):
+            
+            # استدعاء دالة البحث مباشرة بدون ThreadPoolExecutor
+            results = unified_job_scraper(user_keyword, user_location)
             
             if results:
                 st.success(f"✅ تم الانتهاء بنجاح! العثور على {len(results)} وظيفة.")
-                
-                # تحويل النتائج إلى إطار بيانات (DataFrame)
                 df = pd.DataFrame(results)
-                
-                # عرض الجدول بشكل تفاعلي
                 st.dataframe(
                     df,
                     column_config={
@@ -143,8 +141,6 @@ if st.button("🚀 ابدأ البحث (Start Scraping)", type="primary"):
                     use_container_width=True,
                     hide_index=True
                 )
-                
-                # تصدير البيانات (Export as CSV)
                 csv = df.to_csv(index=False).encode('utf-8')
                 st.download_button(
                     label="📥 تحميل البيانات (Download CSV)",
