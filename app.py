@@ -27,6 +27,10 @@ def unified_job_scraper(keyword="AI Engineer", location="Egypt"):
     wuzzuf_url = f"https://wuzzuf.net/search/jobs/?q={keyword}&filters[post_date][0]=within_24_hours"
     try:
         response_wuzzuf = StealthyFetcher.fetch(wuzzuf_url, headless=True, network_idle=True)
+        page_title = response_wuzzuf.css('title')[0].text if response_wuzzuf.css('title') else "Unknown"
+        st.info(f"🔍 [Debug] Wuzzuf Page Title: {page_title}")
+        
+        w_jobs = response_wuzzuf.css('div.css-pkv5jc, div.css-1gatmva')
         w_jobs = response_wuzzuf.css('div.css-pkv5jc, div.css-1gatmva')
         
         for job in w_jobs:
