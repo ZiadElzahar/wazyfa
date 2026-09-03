@@ -4,3 +4,7 @@ scrapling
 patchright
 curl_cffi
 nest-asyncio
+playwright
+browserforge
+openpyxl
+pydantic
